@@ -1,4 +1,4 @@
-var waves = new Audio("waves.wav");
+var waves = new Howl({ src: "waves.mp3", loop: true });
 var screens = document.getElementsByClassName("screen");
 var logbook = document.getElementById("logbook");
 

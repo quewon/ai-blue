@@ -163,7 +163,7 @@
     <div id="container">
       <div id="bg"></div>
       <span class="screen" name="intro">
-        ai//<a onclick="screen('logs');waves.play();">블루</a>
+        ai//<a onclick="screen('logs');playsound();">블루</a>
       </span>
       <span class="screen hidden" name="logs">
         인공지능_꿈일기
@@ -182,6 +182,7 @@
     </div>
     
   </body>
+  <script type="text/javascript" src="howler.core.js"></script>
   <script type="text/javascript" src="bg.js"></script>
   <script type="text/javascript" src="logs.js"></script>
   <script type="text/javascript">
@@ -201,12 +202,12 @@
       mouse.classList.remove("down");
     };
     
+    function playsound() {
+      waves.play();
+    }
+    
     //
     
-    waves.addEventListener('ended', function() {
-      this.currentTime = 0;
-      this.play();
-    }, false);
     for (let i=0; i<10; i++) {
       blips[i] = new blip();
     }
