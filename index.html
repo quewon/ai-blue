@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body {
+        --text: #edf3f7;
+        --bg: #193a4f;
+        
+        margin: 0;
+        background-image: url("blue.png");
+        background-size: 100%;
+        overflow: hidden;
+        background-color: var(--bg);
+        /* background: linear-gradient(#edf3f7, #193a4f); */
+        
+        cursor: none;
+      }
+      
+      .blip {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        background-image: url("blue.png");
+        background-size: 100%;
+        background-blend-mode: hard-light;
+        mix-blend-mode: hard-light;
+        opacity: 0.2;
+        
+        animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both, bounce 3s ease-in-out infinite;
+      }
+      
+      .circle {
+        border-radius: 50%;
+      }
+      
+      @keyframes bounce {
+        0%, 100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+      
+      @keyframes slide-top {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) translateY(100px);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) translateY(0);
+        }
+      }
+      
+      #container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        /* border: 1px solid var(--text); */
+        mix-blend-mode: hard-light;
+        color: var(--text);
+        z-index: 1;
+      }
+      #container #bg {
+        opacity: 0.75;
+        background-color: var(--bg);
+        width: 100%;
+        height: 100%;
+      }
+      #container span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        text-align: justify;
+        transform: translate(-50%, -50%);
+        
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        mix-blend-mode: hard-light;
+      }
+      
+      a {
+        background-color: var(--text);
+        color: var(--bg);
+      }
+      a:hover {
+        animation: flicker 200ms infinite;
+      }
+      
+      @keyframes flicker {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% { 
+          opacity: 0.5;
+        }
+      }
+      
+      #mouse {
+        width: 1em;
+        height: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid var(--text);
+        border-radius: 50%;
+        z-index: 2;
+        pointer-events: none;
+      }
+      #mouse.down {
+        background-color: var(--text);
+      }
+      
+      .screen {
+        padding: 1em;
+      }
+      #logbook div {
+        border: 1px solid var(--text);
+        padding: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      #logbook div:hover {
+        animation: flicker 200ms infinite;
+      }
+      #logbook div:last-child {
+        margin-bottom: 0;
+      }
+      
+      hr {
+        border-color: var(--text);
+        opacity: 0.5;
+        margin: 1em;
+      }
+      
+      .hidden {
+        display: none;
+      }
+      
+      #entry_content {
+        word-break: keep-all;
+      }
+      
+      b {
+        font-weight: normal;
+        /* color: #529a9c; */
+        background-color: #9ac7e6;
+        color: var(--bg);
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="mouse"></div>
+    
+    <div id="container">
+      <div id="bg"></div>
+      <span class="screen" name="intro">
+        ai//<a onclick="screen('logs')">블루</a>
+      </span>
+      <span class="screen hidden" name="logs">
+        인공지능_꿈일기
+        <hr>
+        <div id="logbook">
+          
+        </div>
+      </span>
+      <span class="screen hidden" name="entry">
+        <a onclick="screen('logs')" id="title"></a>
+        <hr>
+        <div id="entry_content">
+          
+        </div>
+      </span>
+    </div>
+    
+  </body>
+  <script type="text/javascript" src="bg.js"></script>
+  <script type="text/javascript" src="logs.js"></script>
+  <script type="text/javascript">
+    var mouse = document.getElementById("mouse");
+    
+    document.onmousemove = function(e) {
+      const x = e.pageX;
+      const y = e.pageY;
+      
+      mouse.style.left = x+"px";
+      mouse.style.top = y+"px";
+    };
+    document.onmousedown = function() {
+      mouse.classList.add("down");
+    };
+    document.onmouseup = function() {
+      mouse.classList.remove("down");
+    };
+    
+    //
+    
+    waves.play();
+    waves.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+    for (let i=0; i<10; i++) {
+      blips[i] = new blip();
+    }
+    update();
+   </script>
+</html>
